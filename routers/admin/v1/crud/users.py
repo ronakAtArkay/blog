@@ -24,28 +24,32 @@ def create_user(db: Session, user: userBase):
 
 
 def get_users(db: Session, skip: int = 0, limit: int = 100):
-    db_user = db.query(models.UserModel).offset(skip).limit(limit).all()
+    db_user = db.query(models.UserModel).filter(models.UserModel.is_deleted == False).offset(skip).limit(limit).all()
     return db_user
 
 
 def get_user(db: Session, user_number: str):
     db_user = (
         db.query(models.UserModel)
-        .filter(models.UserModel.mobile_number == user_number)
+        .filter(models.UserModel.mobile_number == user_number, models.UserModel.is_deleted == False)
         .first()
     )
+    if db_user is None:
+        raise HTTPException(status_code=404, detail="User not found")
     return db_user
 
 
 def get_user_email(db: Session, user_email: str):
     db_user = (
-        db.query(models.UserModel).filter(models.UserModel.email == user_email).first()
+        db.query(models.UserModel).filter(models.UserModel.email == user_email, models.UserModel.is_deleted == False).first()
     )
+    if db_user is None:
+        raise HTTPException(status_code=404, detail="User not found")
     return db_user
 
 
 def update_user(db: Session, id: str, user_detail: userBase):
-    db_user = db.query(models.UserModel).filter(models.UserModel.id == id).first()
+    db_user = db.query(models.UserModel).filter(models.UserModel.id == id, models.UserModel.is_deleted == False).first()
     if db_user is None:
         raise HTTPException(status_code=404, detail="User not found")
     db_user.first_name = user_detail.first_name
