@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+
 import models
 from database import engine
 from routers.admin.v1 import api as admin_v1

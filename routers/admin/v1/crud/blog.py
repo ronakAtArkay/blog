@@ -1,8 +1,10 @@
-import models
-from routers.admin.v1.schemas import blogBase
-from sqlalchemy.orm import Session
-from libs.utils import genrate_id, date
 from fastapi import HTTPException
+from sqlalchemy.orm import Session
+
+import models
+from libs.utils import date, genrate_id
+from routers.admin.v1.schemas import blogBase
+
 
 def create_blog(db: Session, blogs : blogBase):
     db_blog = models.BlogModel(id = genrate_id(), title = blogs.title, description = blogs.description)
@@ -39,6 +41,7 @@ def delete_blog(db: Session, id : str):
     db_blog = db.query(models.BlogModel).filter(models.BlogModel.id == id).first()
     if db_blog:
         db_blog.is_deleted = True
+        db_blog.updated_at = date()
         db.add(db_blog)
         db.commit()
         db.refresh(db_blog)
