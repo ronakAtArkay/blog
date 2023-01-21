@@ -13,18 +13,17 @@ class userBase(BaseModel):
         orm_mode = True
 
 
-
 class blogBase(BaseModel):
-    title : str
-    description : str
+    title: str
+    description: str
 
     class Config:
         orm_mode = True
 
 
 class userBlogBase(BaseModel):
-    title : str
-    description : str
+    title: str
+    description: str
 
     class Config:
         orm_mode = True

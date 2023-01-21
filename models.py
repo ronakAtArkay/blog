@@ -20,27 +20,29 @@ class UserModel(Base):
     updated_at = Column(DateTime, default=datetime.now)
     is_deleted = Column(Boolean, default=False)
 
+
 class BlogModel(Base):
     __tablename__ = "blogs"
 
-    id = Column(String(200), primary_key = True, nullable = False)
-    title = Column(String(200), nullable = False)
-    description = Column(String(200), nullable = True, default = None)
-    image = Column(String(200), default = "uploads/default.png")
-    created_at = Column(DateTime, default = datetime.now)
-    updated_at = Column(DateTime, default = datetime.now)
-    is_deleted = Column(Boolean, default = False)
+    id = Column(String(200), primary_key=True, nullable=False)
+    title = Column(String(200), nullable=False)
+    description = Column(String(200), nullable=True, default=None)
+    image = Column(String(200), default="uploads/default.png")
+    created_at = Column(DateTime, default=datetime.now)
+    updated_at = Column(DateTime, default=datetime.now)
+    is_deleted = Column(Boolean, default=False)
+
 
 class UserBlogModel(Base):
     __tablename__ = "user_blogs"
 
-    id = Column(String(200), primary_key = True, nullable = False)
-    title = Column(String(200), nullable = False)
-    description = Column(String(200), nullable = True, default = None)
-    image = Column(String(200), default = "uploads/default.png")
+    id = Column(String(200), primary_key=True, nullable=False)
+    title = Column(String(200), nullable=False)
+    description = Column(String(200), nullable=True, default=None)
+    image = Column(String(200), default="uploads/default.png")
     user_id = Column(String(200), ForeignKey("users.id"))
-    created_at = Column(DateTime, default = datetime.now)
-    updated_at = Column(DateTime, default = datetime.now)
-    is_deleted = Column(Boolean, default = False)
+    created_at = Column(DateTime, default=datetime.now)
+    updated_at = Column(DateTime, default=datetime.now)
+    is_deleted = Column(Boolean, default=False)
 
-    user = relationship("UserModel", backref = "user_blogs")
+    user = relationship("UserModel", backref="user_blogs")
